@@ -1,6 +1,10 @@
 # Compiled class file
 *.class
 
+#STS files
+.project
+.settings/
+
 # Log file
 *.log
 
