@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -10,12 +10,12 @@
   </parent>
 
   <groupId>es.orange</groupId>
-  <artifactId>orange-items-inventary</artifactId>
+  <artifactId>orange-items-inventory</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>orange-items-inventary</name>
-  <description>Orange Items Inventary</description>
+  <name>orange-items-inventory</name>
+  <description>Orange Items Inventory</description>
  
 
 
@@ -39,4 +39,7 @@
     </plugins>
   </build>
 
+  <modules>
+    <module>schemas</module>
+  </modules>
 </project>

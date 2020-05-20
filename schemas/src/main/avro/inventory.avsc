@@ -1,0 +1,10 @@
+[
+{"namespace": "es.orange.inventory",
+ "type": "record",
+ "name": "Item",
+ "fields": [
+     {"name": "id", "type": "string"},
+     {"name": "type", "type": "string"}
+  ]
+}
+]

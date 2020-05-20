@@ -4,6 +4,10 @@
 #STS files
 .project
 .settings/
+*/.classpath
+
+#Maven
+*/target/**
 
 # Log file
 *.log
