@@ -1,6 +1,7 @@
 # Orange Items Inventory Application
 
 ## Requierements
+_(Spanish)_
 Gestión de inventario y stock
 La compañía planea ofrecer dos nuevos servicios a los clientes. Estos servicios requieren para su correcto funcionamiento la reserva de routers y teléfonos móviles, en adelante, items. Por este motivo la compañía tiene la necesidad de diseñar un nuevo dominio para la gestión del inventario y el stock. El dominio debe ofrecer las siguientes capacidades:
 
@@ -31,3 +32,9 @@ Se valorará positivamente pero no es necesario que:
 * Servicio desplegado y publicado hacia internet.
 
 Como lenguaje de programación es preferible el uso de java o go. Una vez la prueba esté implementada y publicada en el repositorio de código de tu elección necesitamos que nos compartas el enlace para realizar la revisión en dos fases. Una primera fase interna y una segunda fase de revisión conjunta. 
+
+## Modules
+### Schema
+We use Apache Avro for define the domain schemas, and use the avro maven plugin for Schema generation, for futher information: [Apache Avro documentation](https://avro.apache.org/docs/current/index.html)
+To build first time schema just run
+`mvn generate-resources` 
