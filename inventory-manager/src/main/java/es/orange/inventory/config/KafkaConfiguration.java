@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import es.orange.inventory.Item;
+import es.orange.inventory.ReservedItem;
 import es.orange.inventory.schema.Schemas;
 
 @Configuration
@@ -37,10 +38,17 @@ public class KafkaConfiguration {
 	  }
 	  
 	  @Bean
-	  public KafkaProducer<Item, Integer> producer() {
+	  public KafkaProducer<Item, Integer> itemProducer() {
 		return startProducer(bootstrapServers, Schemas.Topics.ITEM_SERDE, 
 			new Serdes.IntegerSerde());
 	  }
+
+	  @Bean
+	  public KafkaProducer<ReservedItem, Integer> reservedItemProducer() {
+		return startProducer(bootstrapServers, Schemas.Topics.RESERVED_ITEM_SERDE, 
+			new Serdes.IntegerSerde());
+	  }
+	  
 	  
 	  @Value("${schema.registry.url}")
 	  private String schemaRegistryUrl;
@@ -53,7 +61,8 @@ public class KafkaConfiguration {
 	  
 	  @PreDestroy
 	  public void shutdown() {
-		producer().close();
+		itemProducer().close();
+		reservedItemProducer().close();
 	  }
 	
 }

@@ -8,7 +8,7 @@ public class ReserveItemsInventoryPayload {
 
 	private String clientId;
 	private String type;
-	private int quantity;
+	private Integer quantity;
 
 	public String getType() {
 		return type;
@@ -26,11 +26,11 @@ public class ReserveItemsInventoryPayload {
 		this.type = type;
 	}
 
-	public int getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 

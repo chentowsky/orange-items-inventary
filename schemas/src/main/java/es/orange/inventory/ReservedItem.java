@@ -14,8 +14,8 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 1568679296539596022L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ReservedItem\",\"namespace\":\"es.orange.inventory\",\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"type\",\"type\":\"string\"},{\"name\":\"user\",\"type\":\"string\"}]}");
+  private static final long serialVersionUID = 1945563303855771776L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ReservedItem\",\"namespace\":\"es.orange.inventory\",\"fields\":[{\"name\":\"type\",\"type\":\"string\"},{\"name\":\"user\",\"type\":\"string\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -71,7 +71,6 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
     return DECODER.decode(b);
   }
 
-  @Deprecated public java.lang.CharSequence id;
   @Deprecated public java.lang.CharSequence type;
   @Deprecated public java.lang.CharSequence user;
 
@@ -84,12 +83,10 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * All-args constructor.
-   * @param id The new value for id
    * @param type The new value for type
    * @param user The new value for user
    */
-  public ReservedItem(java.lang.CharSequence id, java.lang.CharSequence type, java.lang.CharSequence user) {
-    this.id = id;
+  public ReservedItem(java.lang.CharSequence type, java.lang.CharSequence user) {
     this.type = type;
     this.user = user;
   }
@@ -99,9 +96,8 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
     switch (field$) {
-    case 0: return id;
-    case 1: return type;
-    case 2: return user;
+    case 0: return type;
+    case 1: return user;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -110,28 +106,10 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: id = (java.lang.CharSequence)value$; break;
-    case 1: type = (java.lang.CharSequence)value$; break;
-    case 2: user = (java.lang.CharSequence)value$; break;
+    case 0: type = (java.lang.CharSequence)value$; break;
+    case 1: user = (java.lang.CharSequence)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
-  }
-
-  /**
-   * Gets the value of the 'id' field.
-   * @return The value of the 'id' field.
-   */
-  public java.lang.CharSequence getId() {
-    return id;
-  }
-
-
-  /**
-   * Sets the value of the 'id' field.
-   * @param value the value to set.
-   */
-  public void setId(java.lang.CharSequence value) {
-    this.id = value;
   }
 
   /**
@@ -209,7 +187,6 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<ReservedItem>
     implements org.apache.avro.data.RecordBuilder<ReservedItem> {
 
-    private java.lang.CharSequence id;
     private java.lang.CharSequence type;
     private java.lang.CharSequence user;
 
@@ -224,17 +201,13 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
      */
     private Builder(es.orange.inventory.ReservedItem.Builder other) {
       super(other);
-      if (isValidValue(fields()[0], other.id)) {
-        this.id = data().deepCopy(fields()[0].schema(), other.id);
+      if (isValidValue(fields()[0], other.type)) {
+        this.type = data().deepCopy(fields()[0].schema(), other.type);
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
-      if (isValidValue(fields()[1], other.type)) {
-        this.type = data().deepCopy(fields()[1].schema(), other.type);
+      if (isValidValue(fields()[1], other.user)) {
+        this.user = data().deepCopy(fields()[1].schema(), other.user);
         fieldSetFlags()[1] = other.fieldSetFlags()[1];
-      }
-      if (isValidValue(fields()[2], other.user)) {
-        this.user = data().deepCopy(fields()[2].schema(), other.user);
-        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
     }
 
@@ -244,58 +217,14 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
      */
     private Builder(es.orange.inventory.ReservedItem other) {
       super(SCHEMA$);
-      if (isValidValue(fields()[0], other.id)) {
-        this.id = data().deepCopy(fields()[0].schema(), other.id);
+      if (isValidValue(fields()[0], other.type)) {
+        this.type = data().deepCopy(fields()[0].schema(), other.type);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.type)) {
-        this.type = data().deepCopy(fields()[1].schema(), other.type);
+      if (isValidValue(fields()[1], other.user)) {
+        this.user = data().deepCopy(fields()[1].schema(), other.user);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.user)) {
-        this.user = data().deepCopy(fields()[2].schema(), other.user);
-        fieldSetFlags()[2] = true;
-      }
-    }
-
-    /**
-      * Gets the value of the 'id' field.
-      * @return The value.
-      */
-    public java.lang.CharSequence getId() {
-      return id;
-    }
-
-
-    /**
-      * Sets the value of the 'id' field.
-      * @param value The value of 'id'.
-      * @return This builder.
-      */
-    public es.orange.inventory.ReservedItem.Builder setId(java.lang.CharSequence value) {
-      validate(fields()[0], value);
-      this.id = value;
-      fieldSetFlags()[0] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'id' field has been set.
-      * @return True if the 'id' field has been set, false otherwise.
-      */
-    public boolean hasId() {
-      return fieldSetFlags()[0];
-    }
-
-
-    /**
-      * Clears the value of the 'id' field.
-      * @return This builder.
-      */
-    public es.orange.inventory.ReservedItem.Builder clearId() {
-      id = null;
-      fieldSetFlags()[0] = false;
-      return this;
     }
 
     /**
@@ -313,9 +242,9 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
       * @return This builder.
       */
     public es.orange.inventory.ReservedItem.Builder setType(java.lang.CharSequence value) {
-      validate(fields()[1], value);
+      validate(fields()[0], value);
       this.type = value;
-      fieldSetFlags()[1] = true;
+      fieldSetFlags()[0] = true;
       return this;
     }
 
@@ -324,7 +253,7 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
       * @return True if the 'type' field has been set, false otherwise.
       */
     public boolean hasType() {
-      return fieldSetFlags()[1];
+      return fieldSetFlags()[0];
     }
 
 
@@ -334,7 +263,7 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
       */
     public es.orange.inventory.ReservedItem.Builder clearType() {
       type = null;
-      fieldSetFlags()[1] = false;
+      fieldSetFlags()[0] = false;
       return this;
     }
 
@@ -353,9 +282,9 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
       * @return This builder.
       */
     public es.orange.inventory.ReservedItem.Builder setUser(java.lang.CharSequence value) {
-      validate(fields()[2], value);
+      validate(fields()[1], value);
       this.user = value;
-      fieldSetFlags()[2] = true;
+      fieldSetFlags()[1] = true;
       return this;
     }
 
@@ -364,7 +293,7 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
       * @return True if the 'user' field has been set, false otherwise.
       */
     public boolean hasUser() {
-      return fieldSetFlags()[2];
+      return fieldSetFlags()[1];
     }
 
 
@@ -374,7 +303,7 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
       */
     public es.orange.inventory.ReservedItem.Builder clearUser() {
       user = null;
-      fieldSetFlags()[2] = false;
+      fieldSetFlags()[1] = false;
       return this;
     }
 
@@ -383,9 +312,8 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
     public ReservedItem build() {
       try {
         ReservedItem record = new ReservedItem();
-        record.id = fieldSetFlags()[0] ? this.id : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.type = fieldSetFlags()[1] ? this.type : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.user = fieldSetFlags()[2] ? this.user : (java.lang.CharSequence) defaultValue(fields()[2]);
+        record.type = fieldSetFlags()[0] ? this.type : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.user = fieldSetFlags()[1] ? this.user : (java.lang.CharSequence) defaultValue(fields()[1]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -418,8 +346,6 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    out.writeString(this.id);
-
     out.writeString(this.type);
 
     out.writeString(this.user);
@@ -431,24 +357,18 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.id = in.readString(this.id instanceof Utf8 ? (Utf8)this.id : null);
-
       this.type = in.readString(this.type instanceof Utf8 ? (Utf8)this.type : null);
 
       this.user = in.readString(this.user instanceof Utf8 ? (Utf8)this.user : null);
 
     } else {
-      for (int i = 0; i < 3; i++) {
+      for (int i = 0; i < 2; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.id = in.readString(this.id instanceof Utf8 ? (Utf8)this.id : null);
-          break;
-
-        case 1:
           this.type = in.readString(this.type instanceof Utf8 ? (Utf8)this.type : null);
           break;
 
-        case 2:
+        case 1:
           this.user = in.readString(this.user instanceof Utf8 ? (Utf8)this.user : null);
           break;
 
