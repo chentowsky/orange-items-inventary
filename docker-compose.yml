@@ -1,0 +1,67 @@
+---
+version: '2'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka:
+    image: confluentinc/cp-kafka:5.5.0
+    hostname: kafka
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "29092:29092"
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://${NO_PROXY}:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry
+    depends_on:
+      - kafka
+      - zookeeper
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema_registry
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
+    restart: unless-stopped
+ 
+  inventory-manager:
+    build:
+      context: ./inventory-manager
+    depends_on:
+      - schema-registry
+    ports:
+      - "9090:9090"
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS : 'kafka:29092'
+      SCHEMA_REGISTRY_URL: 'http://schema_registry:8081'
+ 
+ 
+  inventory-calculator:
+    build:
+      context: ./inventory-calculator
+    depends_on:
+      - schema-registry
+      - inventory-manager
+    ports:
+      - "9094:9094"
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS : 'kafka:29092'
+      SCHEMA_REGISTRY_URL: 'http://schema_registry:8081'
+      SERVER_HOST: inventory-calculator
+  
