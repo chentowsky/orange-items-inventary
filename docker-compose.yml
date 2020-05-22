@@ -22,7 +22,7 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://${NO_PROXY}:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
@@ -36,7 +36,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      SCHEMA_REGISTRY_HOST_NAME: schema_registry
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
     restart: unless-stopped
  
@@ -48,8 +48,8 @@ services:
     ports:
       - "9090:9090"
     environment:
-      SPRING_KAFKA_BOOTSTRAP_SERVERS : 'kafka:29092'
-      SCHEMA_REGISTRY_URL: 'http://schema_registry:8081'
+      SPRING_KAFKA_BOOTSTRAP_SERVERS : 'kafka:9092'
+      SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
  
  
   inventory-calculator:
@@ -61,7 +61,7 @@ services:
     ports:
       - "9091:9091"
     environment:
-      SPRING_KAFKA_BOOTSTRAP_SERVERS : 'kafka:29092'
-      SCHEMA_REGISTRY_URL: 'http://schema_registry:8081'
+      SPRING_KAFKA_BOOTSTRAP_SERVERS : 'kafka:9092'
+      SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
       SERVER_HOST: inventory-calculator
   

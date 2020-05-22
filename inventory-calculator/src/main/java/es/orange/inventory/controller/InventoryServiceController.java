@@ -29,7 +29,7 @@ public class InventoryServiceController {
 	private InventoryService invCalculator;
 
 
-	@RequestMapping(value = "api/inventory/types/{type}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/api/inventory/types/{type}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public TypeInventoryPayload getAvailableInventoryByType(@PathVariable("type") String type, HttpServletRequest request)
 			throws NotFoundException {

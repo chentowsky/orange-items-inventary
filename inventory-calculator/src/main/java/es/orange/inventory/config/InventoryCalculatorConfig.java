@@ -25,12 +25,6 @@ public class InventoryCalculatorConfig {
 	@Value("${spring.kafka.bootstrap.servers}")
 	private String bootstrapServers;
 
-	@Value("${server.host}")
-	private String serverHost;
-
-	@Value("${server.port:9094}")
-	private int serverPort;
-
 	@Bean
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
@@ -47,7 +41,6 @@ public class InventoryCalculatorConfig {
 		Properties props = new Properties();
 
 		props.put(StreamsConfig.APPLICATION_ID_CONFIG, "inventoryCalculator");
-		props.put(StreamsConfig.APPLICATION_SERVER_CONFIG, serverHost + ":" + serverPort);
 		props.put(StreamsConfig.ROCKSDB_CONFIG_SETTER_CLASS_CONFIG, CustomRocksDBConfig.class);
 		props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 		props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 100);
