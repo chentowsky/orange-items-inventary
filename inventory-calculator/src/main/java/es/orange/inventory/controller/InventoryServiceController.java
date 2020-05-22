@@ -1,7 +1,5 @@
 package es.orange.inventory.controller;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import es.orange.inventory.exception.NotFoundException;
 import es.orange.inventory.payload.TypeInventoryPayload;
 import es.orange.inventory.service.InventoryService;
-import es.orange.inventory.service.InventoryService.HostPort;
 
 @RestController
 public class InventoryServiceController {
@@ -32,7 +29,7 @@ public class InventoryServiceController {
 	private InventoryService invCalculator;
 
 
-	@RequestMapping(value = "/inventory/types/{type}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "api/inventory/types/{type}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public TypeInventoryPayload getAvailableInventoryByType(@PathVariable("type") String type, HttpServletRequest request)
 			throws NotFoundException {

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import es.orange.inventory.Item;
 import es.orange.inventory.payload.AddItemsInventoryPayload;
-import es.orange.inventory.payload.ReserveItemsInventoryPayload;
 import es.orange.inventory.schema.Schemas;
 
 @RequestMapping("/api/inventory")
