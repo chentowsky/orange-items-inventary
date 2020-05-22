@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes.IntegerSerde;
+import org.apache.kafka.common.serialization.Serdes.StringSerde;
 
 import es.orange.inventory.Item;
 import es.orange.inventory.ReservedItem;
@@ -54,16 +55,18 @@ public class Schemas {
 		public static Serde<ReservedItem> RESERVED_ITEM_SERDE = new SpecificAvroSerde<>();
 
 		public static Map<String, Topic<?, ?>> ALL = new HashMap<>();
-		public static Topic<Item, Integer> ITEMS_INVENTORY;
+		public static Topic<Item, Integer> ADDED_ITEMS;
 		public static Topic<ReservedItem, Integer> REQUESTED_ITEMS_BY_CLIENT;
+		public static Topic<String, Integer> AVAILABLE_TYPE_INVENTORY;
 
 		static {
 			createTopics();
 		}
 
 		private static void createTopics() {
-			ITEMS_INVENTORY = new Topic<>("items-inventory", ITEM_SERDE, new IntegerSerde());
+			ADDED_ITEMS = new Topic<>("added-items", ITEM_SERDE, new IntegerSerde());
 			REQUESTED_ITEMS_BY_CLIENT = new Topic<>("reserved-items-by-client", RESERVED_ITEM_SERDE, new IntegerSerde());
+			AVAILABLE_TYPE_INVENTORY = new Topic<>("available-inventory", new StringSerde(), new IntegerSerde());
 		}
 	}
 

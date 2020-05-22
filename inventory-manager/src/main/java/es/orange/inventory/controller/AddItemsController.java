@@ -34,7 +34,7 @@ public class AddItemsController {
 		LOGGER.info("Add items to inventory: {}", addItemsInventoryPayload);
 
 		Long addedItems = addItemsInventoryPayload.getItems().stream()
-				.map(item -> producer.send(new ProducerRecord<>(Schemas.Topics.ITEMS_INVENTORY.name(),
+				.map(item -> producer.send(new ProducerRecord<>(Schemas.Topics.ADDED_ITEMS.name(),
 						new Item(item.getId(), item.getType()), new Integer(1))))
 				.map(future -> {
 					RecordMetadata metadataResult = null;
