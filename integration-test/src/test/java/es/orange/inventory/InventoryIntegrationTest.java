@@ -31,10 +31,10 @@ import com.google.gson.Gson;
  */
 public class InventoryIntegrationTest {
 
-	private static final int MOBILE_AMOUNT_DECREMENT = 30;
-	private static final int MOBILE_AMOUNT_INCREMENT = 150;
-	private static final int ROUTER_AMOUNT_DECREMENT = 40;
-	private static final int ROUTER_AMOUNT_INCREMENT = 120;
+	private static final int MOBILE_AMOUNT_DECREMENT = 3;
+	private static final int MOBILE_AMOUNT_INCREMENT = 15;
+	private static final int ROUTER_AMOUNT_DECREMENT = 4;
+	private static final int ROUTER_AMOUNT_INCREMENT = 12;
 	private static final String HOST = "http://192.168.99.100";
 	private static final String AVAILABLE_INVENTORY_API_URL = HOST+":9091/api/inventory/types/{type}";
 	private static final String INVENTORY_API_URL = HOST+":9090/api/inventory/items";
@@ -101,27 +101,27 @@ public class InventoryIntegrationTest {
 
 	private void addItemsToInventary(String type, int mount) {
 		
-		Item[] itemsToStock = generateRandomItems(type, mount);
+		List<Item> itemsToStock = generateRandomItems(type, mount);
 		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.setAccept(Arrays.asList(MediaType.TEXT_PLAIN));
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-		String jsonItemStr =new Gson().toJson(new ItemList(itemsToStock));
+//		String jsonItemStr =new Gson().toJson(new ItemList(itemsToStock));
 				
 		ResponseEntity<String> exchange = restTemplate.exchange(INVENTORY_API_ADD_STOCK, HttpMethod.POST,
-				new HttpEntity<String>(	jsonItemStr, headers), String.class);
+				new HttpEntity<ItemList>(	new ItemList(itemsToStock), headers), String.class);
 
 		assertTrue(exchange.getStatusCode().equals(HttpStatus.OK));
 	}
 
-	private Item[] generateRandomItems(String type, int amount) {
+	private List<Item> generateRandomItems(String type, int amount) {
 		
 		List<Item> items = Lists.newArrayList();
 		
-		for (int i =1; i < amount; i++) {
+		for (int i =1; i <= amount; i++) {
 			items.add(new Item(String.format("%09d", new Double(Math.random() * 100000000).longValue()), type));
 		}
-		return items.toArray(new Item[amount]);
+		return items;
 		
 	}
 
@@ -155,6 +155,24 @@ public class InventoryIntegrationTest {
 	    converters.add(new MappingJackson2HttpMessageConverter());
 	    return converters;
 	}
+	
+	
+	static class ItemList{
+		private List<Item> items;
+
+		public ItemList(List<Item> items) {
+			this.items = items;
+		}
+
+		public List<Item> getItems() {
+			return items;
+		}
+
+		public void setItems(List<Item> items) {
+			this.items = items;
+		}
+		
+	}
 
 	static class Item {
 		private String id;
@@ -165,7 +183,6 @@ public class InventoryIntegrationTest {
 		}
 
 		public Item(String id, String type) {
-			super();
 			this.id = id;
 			this.type = type;
 		}
@@ -186,24 +203,6 @@ public class InventoryIntegrationTest {
 			this.type = type;
 		}
 
-	}
-	
-	static class ItemList {
-		private Item[] items;
-
-		public ItemList(Item[] items) {
-			this.items = items;
-		}
-
-		public Item[] getItems() {
-			return items;
-		}
-
-		public void setItems(Item[] items) {
-			this.items = items;
-		}
-
-		
 	}
 	
 	static class InventoryByType {
