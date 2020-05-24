@@ -33,7 +33,7 @@ import es.orange.inventory.schema.Schemas.Topics;
 public class InventoryCalculator implements InventoryService {
   private static final Logger LOGGER = LoggerFactory.getLogger(InventoryCalculator.class);
   
-  @Autowired()
+  @Autowired
   private Properties streamsConfig;
 
   private KafkaStreams availableByTypeStream;
@@ -80,7 +80,7 @@ public class InventoryCalculator implements InventoryService {
 
     KTable<String, Integer> availableInventory = addedTypesToStock.leftJoin(reservedByTypes,
             (stock, reservations) -> {
-              LOGGER.info("Stock:{} Reservation {}", stock, reservations);
+              LOGGER.info("Added to stock:{}, Reservation requested: {}", stock, reservations);
               return (stock - (reservations == null ? 0 : reservations));
             }, Materialized.<String, Integer>as(Stores.persistentKeyValueStore(AVAILABLE_INVENTORY_STORE))
                 .withKeySerde(Topics.AVAILABLE_BY_TYPE_INVENTORY.keySerde()).withValueSerde(Topics.AVAILABLE_BY_TYPE_INVENTORY.valueSerde()));
