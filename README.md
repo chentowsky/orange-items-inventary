@@ -5,10 +5,10 @@ _(Spanish)_
 Gestión de inventario y stock
 La compañía planea ofrecer dos nuevos servicios a los clientes. Estos servicios requieren para su correcto funcionamiento la reserva de routers y teléfonos móviles, en adelante, items. Por este motivo la compañía tiene la necesidad de diseñar un nuevo dominio para la gestión del inventario y el stock. El dominio debe ofrecer las siguientes capacidades:
 
-1. Añadir stock para cualquiera de estos items.
-2. Gestionar el stock de los items. Necesitamos conocer cuántos items de cada tipo tenemos disponibles.
-3. Reservar N items de un mismo tipo permitiéndonos conocer a qué cliente está asociado.
-4. Devolver N recursos de un mismo tipo al stock una vez el cliente deja de necesitarlo bien porque se ha dado de baja del servicio asociado o bien porque ha cancelado la compra.
+- [X] Añadir stock para cualquiera de estos items.
+- [X] Gestionar el stock de los items. Necesitamos conocer cuántos items de cada tipo tenemos disponibles.
+- [X] Reservar N items de un mismo tipo permitiéndonos conocer a qué cliente está asociado.
+- [X] Devolver N recursos de un mismo tipo al stock una vez el cliente deja de necesitarlo bien porque se ha dado de baja del servicio asociado o bien porque ha cancelado la compra.
 
 La información que debemos almacenar en el stock para cada tipo de item es la siguiente:
 * Para los routers solamente almacenamos su identificador que es un alfanumérico.
@@ -45,6 +45,44 @@ This is a stream processor service that computes available inventory by item typ
 ### Integration test
 Separated project for run integration testing on the integrated project. First start docker containers with docker-compose and run `mvn test` on this project.
  
-##Docker 
+## Docker 
 This project can be run with docker-compose for demo proposal. Just, first build the complete project with `mvn clean install` command, and after that use the `docker-compose up --build` command to run the entire project
+
+## Endpoints
+
+* Add items: POST http://localhost:9090/api/inventory/items/add and example body content:
+```
+{
+  "items" : [
+    {
+      "id" : "684512345", 
+      "type":  "movil"
+    },
+    {
+      "id" : "684512555", 
+      "type":  "movil"
+    },
+    {
+      "id" : "584512345", 
+      "type":  "movil"
+    },
+    {
+      "id" : "884512555", 
+      "type":  "movil"
+    }
+    
+     ]
+}
+```
+* Request reserve items: POST http://localhost:9090/api/inventory/items/reserve and example body content:
+```
+{
+  "clientId" : "X9877299Z", 
+  "type":  "router",
+  "quantity": "20"
+}
+```
+
+* Get available stock: GET http://192.168.99.100:9091/api/inventory/types/{type}
+
  
