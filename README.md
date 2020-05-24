@@ -38,3 +38,13 @@ Como lenguaje de programación es preferible el uso de java o go. Una vez la pru
 We use Apache Avro for define the domain schemas, and use the avro maven plugin for Schema generation, for futher information: [Apache Avro documentation](https://avro.apache.org/docs/current/index.html)
 To build first time schema just run
 `mvn generate-resources` 
+### Inventory Manager
+Has simple API's for accepting inventory updates (add stock, reservations by item type and releases items by client)
+### Inventory Calculator
+This is a stream processor service that computes available inventory by item type and reserved items by client.
+### Integration test
+Separated project for run integration testing on the integrated project. First start docker containers with docker-compose and run `mvn test` on this project.
+ 
+##Docker 
+This project can be run with docker-compose for demo proposal. Just, first build the complete project with `mvn clean install` command, and after that use the `docker-compose up --build` command to run the entire project
+ 

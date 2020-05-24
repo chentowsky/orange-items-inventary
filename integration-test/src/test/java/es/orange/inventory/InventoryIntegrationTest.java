@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -31,10 +32,11 @@ import com.google.gson.Gson;
  */
 public class InventoryIntegrationTest {
 
-	private static final int MOBILE_AMOUNT_DECREMENT = 30;
-	private static final int MOBILE_AMOUNT_INCREMENT = 150;
-	private static final int ROUTER_AMOUNT_DECREMENT = 40;
-	private static final int ROUTER_AMOUNT_INCREMENT = 120;
+	private static final int MOBILE_AMOUNT_DECREMENT = 3;
+	private static final int MOBILE_AMOUNT_INCREMENT = 15;
+	private static final int ROUTER_AMOUNT_DECREMENT = 4;
+	private static final int ROUTER_AMOUNT_INCREMENT = 12;
+	private static final String CLIENT_ID = "chentowsky";
 	private static final String HOST = "http://192.168.99.100";
 	private static final String AVAILABLE_INVENTORY_API_URL = HOST+":9091/api/inventory/types/{type}";
 	private static final String INVENTORY_API_URL = HOST+":9090/api/inventory/items";
@@ -63,7 +65,7 @@ public class InventoryIntegrationTest {
 				is(expectedMobileInventoryAmout));
 
 		// Reserve inventory
-		reserveInventory(MOBILE_TYPE, MOBILE_AMOUNT_DECREMENT);
+		reserveInventory(CLIENT_ID,MOBILE_TYPE, MOBILE_AMOUNT_DECREMENT);
 
 		Thread.sleep(1000); //TODO Change to async way
 
@@ -88,11 +90,11 @@ public class InventoryIntegrationTest {
 				is(expectedRouterInventoryAmout));
 
 		// Reserve router items
-		reserveInventory(ROUTER_TYPE, ROUTER_AMOUNT_DECREMENT);
+		reserveInventory(CLIENT_ID, ROUTER_TYPE, ROUTER_AMOUNT_DECREMENT);
 
 		Thread.sleep(1000); //TODO Change to async way
 
-		expectedRouterInventoryAmout -= ROUTER_AMOUNT_INCREMENT;
+		expectedRouterInventoryAmout -= ROUTER_AMOUNT_DECREMENT;
 
 		assertThat("Mobile Inventory must have the inventory update", getAvailableInventoryAmount(ROUTER_TYPE),
 				is(expectedRouterInventoryAmout));
@@ -101,37 +103,37 @@ public class InventoryIntegrationTest {
 
 	private void addItemsToInventary(String type, int mount) {
 		
-		Item[] itemsToStock = generateRandomItems(type, mount);
+		List<Item> itemsToStock = generateRandomItems(type, mount);
 		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.setAccept(Arrays.asList(MediaType.TEXT_PLAIN));
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-		String jsonItemStr =new Gson().toJson(new ItemList(itemsToStock));
+//		String jsonItemStr =new Gson().toJson(new ItemList(itemsToStock));
 				
 		ResponseEntity<String> exchange = restTemplate.exchange(INVENTORY_API_ADD_STOCK, HttpMethod.POST,
-				new HttpEntity<String>(	jsonItemStr, headers), String.class);
+				new HttpEntity<ItemList>(	new ItemList(itemsToStock), headers), String.class);
 
 		assertTrue(exchange.getStatusCode().equals(HttpStatus.OK));
 	}
 
-	private Item[] generateRandomItems(String type, int amount) {
+	private List<Item> generateRandomItems(String type, int amount) {
 		
 		List<Item> items = Lists.newArrayList();
 		
-		for (int i =1; i < amount; i++) {
+		for (int i =1; i <= amount; i++) {
 			items.add(new Item(String.format("%09d", new Double(Math.random() * 100000000).longValue()), type));
 		}
-		return items.toArray(new Item[amount]);
+		return items;
 		
 	}
 
-	private void reserveInventory(String type, int quantity) {
-		InventoryByType amountOfItemTypeToReserve = new InventoryByType(type, quantity);
+	private void reserveInventory(String clientId, String type, int quantity) {
+		ReservationItems amountOfItemTypeToReserve = new ReservationItems(clientId, type, quantity);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.setAccept(Arrays.asList(MediaType.TEXT_PLAIN));
 		ResponseEntity<String> exchange = restTemplate.exchange(INVENTORY_API_RESERVE_ITEMS, HttpMethod.POST,
-				new HttpEntity<InventoryByType>(amountOfItemTypeToReserve, headers), String.class);
+				new HttpEntity<ReservationItems>(amountOfItemTypeToReserve, headers), String.class);
 
 		assertTrue(exchange.getStatusCode().equals(HttpStatus.OK));
 	}
@@ -140,8 +142,8 @@ public class InventoryIntegrationTest {
 		Map<String, String> pathVars = Maps.newHashMap();
 		pathVars.put("type", type);
 		try {
-			InventoryByType inventory = restTemplate.getForObject(
-					AVAILABLE_INVENTORY_API_URL, InventoryByType.class, pathVars);
+			AvailableInventoryByType inventory = restTemplate.getForObject(
+					AVAILABLE_INVENTORY_API_URL, AvailableInventoryByType.class, pathVars);
 
 			return inventory.getCount();
 		} catch (RestClientException e) {
@@ -152,8 +154,29 @@ public class InventoryIntegrationTest {
 	private List<HttpMessageConverter<?>> getMessageConverters() {
 	    List<HttpMessageConverter<?>> converters = 
 	      new ArrayList<HttpMessageConverter<?>>();
-	    converters.add(new MappingJackson2HttpMessageConverter());
+	    MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
+	    mappingJackson2HttpMessageConverter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_JSON));
+	    converters.add(mappingJackson2HttpMessageConverter);
+	    converters.add(new StringHttpMessageConverter ());
 	    return converters;
+	}
+	
+	
+	static class ItemList{
+		private List<Item> items;
+
+		public ItemList(List<Item> items) {
+			this.items = items;
+		}
+
+		public List<Item> getItems() {
+			return items;
+		}
+
+		public void setItems(List<Item> items) {
+			this.items = items;
+		}
+		
 	}
 
 	static class Item {
@@ -165,7 +188,6 @@ public class InventoryIntegrationTest {
 		}
 
 		public Item(String id, String type) {
-			super();
 			this.id = id;
 			this.type = type;
 		}
@@ -187,50 +209,67 @@ public class InventoryIntegrationTest {
 		}
 
 	}
-	
-	static class ItemList {
-		private Item[] items;
 
-		public ItemList(Item[] items) {
-			this.items = items;
-		}
-
-		public Item[] getItems() {
-			return items;
-		}
-
-		public void setItems(Item[] items) {
-			this.items = items;
-		}
-
-		
-	}
-	
-	static class InventoryByType {
+	static class AvailableInventoryByType {
 		private String type;
 		private int count;
-		
-		public InventoryByType() {
-		}
-		
-		public InventoryByType(String type, int count) {
-			this.type = type;
-			this.count = count;
-		}
 		
 		public String getType() {
 			return type;
 		}
+		
 		public void setType(String type) {
 			this.type = type;
 		}
+		
 		public int getCount() {
 			return count;
 		}
+		
 		public void setCount(int count) {
 			this.count = count;
 		}
+		
+	}
+	
+	static class ReservationItems {
+		private String clientId;
+		private String type;
+		private int quantity;
+		
+		public ReservationItems() {
+		}
 
+		public ReservationItems(String clientId, String type, int quantity) {
+			super();
+			this.clientId = clientId;
+			this.type = type;
+			this.quantity = quantity;
+		}
+
+		public String getClientId() {
+			return clientId;
+		}
+
+		public void setClientId(String clientId) {
+			this.clientId = clientId;
+		}
+
+		public String getType() {
+			return type;
+		}
+		
+		public void setType(String type) {
+			this.type = type;
+		}
+ 
+		public int getQuantity() {
+			return quantity;
+		}
+
+		public void setQuantity(int quantity) {
+			this.quantity = quantity;
+		}
 		
 	}
 }
