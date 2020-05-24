@@ -24,16 +24,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import es.orange.inventory.Item;
-import es.orange.inventory.ReservedItem;
 import es.orange.inventory.exception.NotFoundException;
+import es.orange.inventory.model.Item;
+import es.orange.inventory.model.RequestedItem;
 import es.orange.inventory.schema.Schemas.Topics;
 
 @Component
 public class InventoryCalculator implements InventoryService {
   private static final Logger LOGGER = LoggerFactory.getLogger(InventoryCalculator.class);
   
-  @Autowired()
+  @Autowired
   private Properties streamsConfig;
 
   private KafkaStreams availableByTypeStream;
@@ -67,8 +67,8 @@ public class InventoryCalculator implements InventoryService {
     KTable<String, Integer> reservedByTypes = kafkaStreamBuilder
             .stream(Topics.REQUESTED_ITEMS_BY_CLIENT.name(),
                 Consumed.with(Topics.REQUESTED_ITEMS_BY_CLIENT.keySerde(), Topics.REQUESTED_ITEMS_BY_CLIENT.valueSerde()))
-            .selectKey(new KeyValueMapper<ReservedItem, Integer, String>() { //Change the key to type.
-            	public String apply(ReservedItem key, Integer value) {
+            .selectKey(new KeyValueMapper<RequestedItem, Integer, String>() { //Change the key to type.
+            	public String apply(RequestedItem key, Integer value) {
             		return key.getType().toString();
             	};
     		})
@@ -80,10 +80,10 @@ public class InventoryCalculator implements InventoryService {
 
     KTable<String, Integer> availableInventory = addedTypesToStock.leftJoin(reservedByTypes,
             (stock, reservations) -> {
-              LOGGER.info("Stock:{} Reservation {}", stock, reservations);
+              LOGGER.info("Added to stock:{}, Reservation requested: {}", stock, reservations);
               return (stock - (reservations == null ? 0 : reservations));
             }, Materialized.<String, Integer>as(Stores.persistentKeyValueStore(AVAILABLE_INVENTORY_STORE))
-                .withKeySerde(Topics.AVAILABLE_TYPE_INVENTORY.keySerde()).withValueSerde(Topics.AVAILABLE_TYPE_INVENTORY.valueSerde()));
+                .withKeySerde(Topics.AVAILABLE_BY_TYPE_INVENTORY.keySerde()).withValueSerde(Topics.AVAILABLE_BY_TYPE_INVENTORY.valueSerde()));
     
     //TODO: Implements when a client release a item
     
@@ -91,7 +91,7 @@ public class InventoryCalculator implements InventoryService {
     availableInventory.toStream().map((key, value) ->{
     	LOGGER.info("Streaming Key: {} Value: {}", key, value);
     	return new KeyValue<String, Integer>(key, value);
-    }).to(Topics.AVAILABLE_TYPE_INVENTORY.name(), Produced.<String, Integer>with(Topics.AVAILABLE_TYPE_INVENTORY.keySerde(), Topics.AVAILABLE_TYPE_INVENTORY.valueSerde()));
+    }).to(Topics.AVAILABLE_BY_TYPE_INVENTORY.name(), Produced.<String, Integer>with(Topics.AVAILABLE_BY_TYPE_INVENTORY.keySerde(), Topics.AVAILABLE_BY_TYPE_INVENTORY.valueSerde()));
     
     availableByTypeStream = new KafkaStreams(kafkaStreamBuilder.build(), streamsConfig);
     availableByTypeStream.cleanUp(); //TODO: Delete - only for local testing

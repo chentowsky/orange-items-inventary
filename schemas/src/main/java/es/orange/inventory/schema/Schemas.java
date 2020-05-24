@@ -10,8 +10,8 @@ import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes.IntegerSerde;
 import org.apache.kafka.common.serialization.Serdes.StringSerde;
 
-import es.orange.inventory.Item;
-import es.orange.inventory.ReservedItem;
+import es.orange.inventory.model.Item;
+import es.orange.inventory.model.RequestedItem;
 import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
 
 /**
@@ -52,12 +52,12 @@ public class Schemas {
 
 	public static class Topics {
 		public static Serde<Item> ITEM_SERDE = new SpecificAvroSerde<>();
-		public static Serde<ReservedItem> RESERVED_ITEM_SERDE = new SpecificAvroSerde<>();
+		public static Serde<RequestedItem> REQUESTED_ITEMS_SERDE = new SpecificAvroSerde<>();
 
 		public static Map<String, Topic<?, ?>> ALL = new HashMap<>();
 		public static Topic<Item, Integer> ADDED_ITEMS;
-		public static Topic<ReservedItem, Integer> REQUESTED_ITEMS_BY_CLIENT;
-		public static Topic<String, Integer> AVAILABLE_TYPE_INVENTORY;
+		public static Topic<RequestedItem, Integer> REQUESTED_ITEMS_BY_CLIENT;
+		public static Topic<String, Integer> AVAILABLE_BY_TYPE_INVENTORY;
 
 		static {
 			createTopics();
@@ -65,8 +65,8 @@ public class Schemas {
 
 		private static void createTopics() {
 			ADDED_ITEMS = new Topic<>("added-items", ITEM_SERDE, new IntegerSerde());
-			REQUESTED_ITEMS_BY_CLIENT = new Topic<>("reserved-items-by-client", RESERVED_ITEM_SERDE, new IntegerSerde());
-			AVAILABLE_TYPE_INVENTORY = new Topic<>("available-inventory", new StringSerde(), new IntegerSerde());
+			REQUESTED_ITEMS_BY_CLIENT = new Topic<>("requested-items-by-client", REQUESTED_ITEMS_SERDE, new IntegerSerde());
+			AVAILABLE_BY_TYPE_INVENTORY = new Topic<>("available-inventory", new StringSerde(), new IntegerSerde());
 		}
 	}
 
