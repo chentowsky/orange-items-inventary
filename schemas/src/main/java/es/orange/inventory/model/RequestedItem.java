@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package es.orange.inventory;
+package es.orange.inventory.model;
 
 import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
@@ -13,24 +13,24 @@ import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
-public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 1945563303855771776L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ReservedItem\",\"namespace\":\"es.orange.inventory\",\"fields\":[{\"name\":\"type\",\"type\":\"string\"},{\"name\":\"user\",\"type\":\"string\"}]}");
+public class RequestedItem extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
+  private static final long serialVersionUID = 5692713618458792941L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"RequestedItem\",\"namespace\":\"es.orange.inventory.model\",\"fields\":[{\"name\":\"type\",\"type\":\"string\"},{\"name\":\"clientId\",\"type\":\"string\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
 
-  private static final BinaryMessageEncoder<ReservedItem> ENCODER =
-      new BinaryMessageEncoder<ReservedItem>(MODEL$, SCHEMA$);
+  private static final BinaryMessageEncoder<RequestedItem> ENCODER =
+      new BinaryMessageEncoder<RequestedItem>(MODEL$, SCHEMA$);
 
-  private static final BinaryMessageDecoder<ReservedItem> DECODER =
-      new BinaryMessageDecoder<ReservedItem>(MODEL$, SCHEMA$);
+  private static final BinaryMessageDecoder<RequestedItem> DECODER =
+      new BinaryMessageDecoder<RequestedItem>(MODEL$, SCHEMA$);
 
   /**
    * Return the BinaryMessageEncoder instance used by this class.
    * @return the message encoder used by this class
    */
-  public static BinaryMessageEncoder<ReservedItem> getEncoder() {
+  public static BinaryMessageEncoder<RequestedItem> getEncoder() {
     return ENCODER;
   }
 
@@ -38,7 +38,7 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
    * Return the BinaryMessageDecoder instance used by this class.
    * @return the message decoder used by this class
    */
-  public static BinaryMessageDecoder<ReservedItem> getDecoder() {
+  public static BinaryMessageDecoder<RequestedItem> getDecoder() {
     return DECODER;
   }
 
@@ -47,12 +47,12 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
    * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
-  public static BinaryMessageDecoder<ReservedItem> createDecoder(SchemaStore resolver) {
-    return new BinaryMessageDecoder<ReservedItem>(MODEL$, SCHEMA$, resolver);
+  public static BinaryMessageDecoder<RequestedItem> createDecoder(SchemaStore resolver) {
+    return new BinaryMessageDecoder<RequestedItem>(MODEL$, SCHEMA$, resolver);
   }
 
   /**
-   * Serializes this ReservedItem to a ByteBuffer.
+   * Serializes this RequestedItem to a ByteBuffer.
    * @return a buffer holding the serialized data for this instance
    * @throws java.io.IOException if this instance could not be serialized
    */
@@ -61,34 +61,34 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
   }
 
   /**
-   * Deserializes a ReservedItem from a ByteBuffer.
+   * Deserializes a RequestedItem from a ByteBuffer.
    * @param b a byte buffer holding serialized data for an instance of this class
-   * @return a ReservedItem instance decoded from the given buffer
+   * @return a RequestedItem instance decoded from the given buffer
    * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
    */
-  public static ReservedItem fromByteBuffer(
+  public static RequestedItem fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
   @Deprecated public java.lang.CharSequence type;
-  @Deprecated public java.lang.CharSequence user;
+  @Deprecated public java.lang.CharSequence clientId;
 
   /**
    * Default constructor.  Note that this does not initialize fields
    * to their default values from the schema.  If that is desired then
    * one should use <code>newBuilder()</code>.
    */
-  public ReservedItem() {}
+  public RequestedItem() {}
 
   /**
    * All-args constructor.
    * @param type The new value for type
-   * @param user The new value for user
+   * @param clientId The new value for clientId
    */
-  public ReservedItem(java.lang.CharSequence type, java.lang.CharSequence user) {
+  public RequestedItem(java.lang.CharSequence type, java.lang.CharSequence clientId) {
     this.type = type;
-    this.user = user;
+    this.clientId = clientId;
   }
 
   public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
@@ -97,7 +97,7 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
   public java.lang.Object get(int field$) {
     switch (field$) {
     case 0: return type;
-    case 1: return user;
+    case 1: return clientId;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -107,7 +107,7 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: type = (java.lang.CharSequence)value$; break;
-    case 1: user = (java.lang.CharSequence)value$; break;
+    case 1: clientId = (java.lang.CharSequence)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -130,65 +130,65 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
   }
 
   /**
-   * Gets the value of the 'user' field.
-   * @return The value of the 'user' field.
+   * Gets the value of the 'clientId' field.
+   * @return The value of the 'clientId' field.
    */
-  public java.lang.CharSequence getUser() {
-    return user;
+  public java.lang.CharSequence getClientId() {
+    return clientId;
   }
 
 
   /**
-   * Sets the value of the 'user' field.
+   * Sets the value of the 'clientId' field.
    * @param value the value to set.
    */
-  public void setUser(java.lang.CharSequence value) {
-    this.user = value;
+  public void setClientId(java.lang.CharSequence value) {
+    this.clientId = value;
   }
 
   /**
-   * Creates a new ReservedItem RecordBuilder.
-   * @return A new ReservedItem RecordBuilder
+   * Creates a new RequestedItem RecordBuilder.
+   * @return A new RequestedItem RecordBuilder
    */
-  public static es.orange.inventory.ReservedItem.Builder newBuilder() {
-    return new es.orange.inventory.ReservedItem.Builder();
+  public static es.orange.inventory.model.RequestedItem.Builder newBuilder() {
+    return new es.orange.inventory.model.RequestedItem.Builder();
   }
 
   /**
-   * Creates a new ReservedItem RecordBuilder by copying an existing Builder.
+   * Creates a new RequestedItem RecordBuilder by copying an existing Builder.
    * @param other The existing builder to copy.
-   * @return A new ReservedItem RecordBuilder
+   * @return A new RequestedItem RecordBuilder
    */
-  public static es.orange.inventory.ReservedItem.Builder newBuilder(es.orange.inventory.ReservedItem.Builder other) {
+  public static es.orange.inventory.model.RequestedItem.Builder newBuilder(es.orange.inventory.model.RequestedItem.Builder other) {
     if (other == null) {
-      return new es.orange.inventory.ReservedItem.Builder();
+      return new es.orange.inventory.model.RequestedItem.Builder();
     } else {
-      return new es.orange.inventory.ReservedItem.Builder(other);
+      return new es.orange.inventory.model.RequestedItem.Builder(other);
     }
   }
 
   /**
-   * Creates a new ReservedItem RecordBuilder by copying an existing ReservedItem instance.
+   * Creates a new RequestedItem RecordBuilder by copying an existing RequestedItem instance.
    * @param other The existing instance to copy.
-   * @return A new ReservedItem RecordBuilder
+   * @return A new RequestedItem RecordBuilder
    */
-  public static es.orange.inventory.ReservedItem.Builder newBuilder(es.orange.inventory.ReservedItem other) {
+  public static es.orange.inventory.model.RequestedItem.Builder newBuilder(es.orange.inventory.model.RequestedItem other) {
     if (other == null) {
-      return new es.orange.inventory.ReservedItem.Builder();
+      return new es.orange.inventory.model.RequestedItem.Builder();
     } else {
-      return new es.orange.inventory.ReservedItem.Builder(other);
+      return new es.orange.inventory.model.RequestedItem.Builder(other);
     }
   }
 
   /**
-   * RecordBuilder for ReservedItem instances.
+   * RecordBuilder for RequestedItem instances.
    */
   @org.apache.avro.specific.AvroGenerated
-  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<ReservedItem>
-    implements org.apache.avro.data.RecordBuilder<ReservedItem> {
+  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<RequestedItem>
+    implements org.apache.avro.data.RecordBuilder<RequestedItem> {
 
     private java.lang.CharSequence type;
-    private java.lang.CharSequence user;
+    private java.lang.CharSequence clientId;
 
     /** Creates a new Builder */
     private Builder() {
@@ -199,30 +199,30 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(es.orange.inventory.ReservedItem.Builder other) {
+    private Builder(es.orange.inventory.model.RequestedItem.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.type)) {
         this.type = data().deepCopy(fields()[0].schema(), other.type);
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
-      if (isValidValue(fields()[1], other.user)) {
-        this.user = data().deepCopy(fields()[1].schema(), other.user);
+      if (isValidValue(fields()[1], other.clientId)) {
+        this.clientId = data().deepCopy(fields()[1].schema(), other.clientId);
         fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
     }
 
     /**
-     * Creates a Builder by copying an existing ReservedItem instance
+     * Creates a Builder by copying an existing RequestedItem instance
      * @param other The existing instance to copy.
      */
-    private Builder(es.orange.inventory.ReservedItem other) {
+    private Builder(es.orange.inventory.model.RequestedItem other) {
       super(SCHEMA$);
       if (isValidValue(fields()[0], other.type)) {
         this.type = data().deepCopy(fields()[0].schema(), other.type);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.user)) {
-        this.user = data().deepCopy(fields()[1].schema(), other.user);
+      if (isValidValue(fields()[1], other.clientId)) {
+        this.clientId = data().deepCopy(fields()[1].schema(), other.clientId);
         fieldSetFlags()[1] = true;
       }
     }
@@ -241,7 +241,7 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
       * @param value The value of 'type'.
       * @return This builder.
       */
-    public es.orange.inventory.ReservedItem.Builder setType(java.lang.CharSequence value) {
+    public es.orange.inventory.model.RequestedItem.Builder setType(java.lang.CharSequence value) {
       validate(fields()[0], value);
       this.type = value;
       fieldSetFlags()[0] = true;
@@ -261,59 +261,59 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
       * Clears the value of the 'type' field.
       * @return This builder.
       */
-    public es.orange.inventory.ReservedItem.Builder clearType() {
+    public es.orange.inventory.model.RequestedItem.Builder clearType() {
       type = null;
       fieldSetFlags()[0] = false;
       return this;
     }
 
     /**
-      * Gets the value of the 'user' field.
+      * Gets the value of the 'clientId' field.
       * @return The value.
       */
-    public java.lang.CharSequence getUser() {
-      return user;
+    public java.lang.CharSequence getClientId() {
+      return clientId;
     }
 
 
     /**
-      * Sets the value of the 'user' field.
-      * @param value The value of 'user'.
+      * Sets the value of the 'clientId' field.
+      * @param value The value of 'clientId'.
       * @return This builder.
       */
-    public es.orange.inventory.ReservedItem.Builder setUser(java.lang.CharSequence value) {
+    public es.orange.inventory.model.RequestedItem.Builder setClientId(java.lang.CharSequence value) {
       validate(fields()[1], value);
-      this.user = value;
+      this.clientId = value;
       fieldSetFlags()[1] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'user' field has been set.
-      * @return True if the 'user' field has been set, false otherwise.
+      * Checks whether the 'clientId' field has been set.
+      * @return True if the 'clientId' field has been set, false otherwise.
       */
-    public boolean hasUser() {
+    public boolean hasClientId() {
       return fieldSetFlags()[1];
     }
 
 
     /**
-      * Clears the value of the 'user' field.
+      * Clears the value of the 'clientId' field.
       * @return This builder.
       */
-    public es.orange.inventory.ReservedItem.Builder clearUser() {
-      user = null;
+    public es.orange.inventory.model.RequestedItem.Builder clearClientId() {
+      clientId = null;
       fieldSetFlags()[1] = false;
       return this;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public ReservedItem build() {
+    public RequestedItem build() {
       try {
-        ReservedItem record = new ReservedItem();
+        RequestedItem record = new RequestedItem();
         record.type = fieldSetFlags()[0] ? this.type : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.user = fieldSetFlags()[1] ? this.user : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.clientId = fieldSetFlags()[1] ? this.clientId : (java.lang.CharSequence) defaultValue(fields()[1]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -324,8 +324,8 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumWriter<ReservedItem>
-    WRITER$ = (org.apache.avro.io.DatumWriter<ReservedItem>)MODEL$.createDatumWriter(SCHEMA$);
+  private static final org.apache.avro.io.DatumWriter<RequestedItem>
+    WRITER$ = (org.apache.avro.io.DatumWriter<RequestedItem>)MODEL$.createDatumWriter(SCHEMA$);
 
   @Override public void writeExternal(java.io.ObjectOutput out)
     throws java.io.IOException {
@@ -333,8 +333,8 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumReader<ReservedItem>
-    READER$ = (org.apache.avro.io.DatumReader<ReservedItem>)MODEL$.createDatumReader(SCHEMA$);
+  private static final org.apache.avro.io.DatumReader<RequestedItem>
+    READER$ = (org.apache.avro.io.DatumReader<RequestedItem>)MODEL$.createDatumReader(SCHEMA$);
 
   @Override public void readExternal(java.io.ObjectInput in)
     throws java.io.IOException {
@@ -348,7 +348,7 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
   {
     out.writeString(this.type);
 
-    out.writeString(this.user);
+    out.writeString(this.clientId);
 
   }
 
@@ -359,7 +359,7 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
     if (fieldOrder == null) {
       this.type = in.readString(this.type instanceof Utf8 ? (Utf8)this.type : null);
 
-      this.user = in.readString(this.user instanceof Utf8 ? (Utf8)this.user : null);
+      this.clientId = in.readString(this.clientId instanceof Utf8 ? (Utf8)this.clientId : null);
 
     } else {
       for (int i = 0; i < 2; i++) {
@@ -369,7 +369,7 @@ public class ReservedItem extends org.apache.avro.specific.SpecificRecordBase im
           break;
 
         case 1:
-          this.user = in.readString(this.user instanceof Utf8 ? (Utf8)this.user : null);
+          this.clientId = in.readString(this.clientId instanceof Utf8 ? (Utf8)this.clientId : null);
           break;
 
         default:

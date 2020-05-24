@@ -1,5 +1,5 @@
 [
-{"namespace": "es.orange.inventory",
+{"namespace": "es.orange.inventory.model",
  "type": "record",
  "name": "Item",
  "fields": [
@@ -7,12 +7,21 @@
      {"name": "type", "type": "string"}
   ]
 },
-{"namespace": "es.orange.inventory",
+{"namespace": "es.orange.inventory.model",
  "type": "record",
  "name": "RequestedItem",
  "fields": [
      {"name": "type", "type": "string"},
-     {"name": "user", "type": "string"}
+     {"name": "clientId", "type": "string"}
+  ]
+}
+,
+{"namespace": "es.orange.inventory.model",
+ "type": "record",
+ "name": "ReservedItems",
+ "fields": [
+     {"name": "clientId", "type": "string"},
+     {"name": "items", "type": { "type": "array", "items": "Item"}}
   ]
 }
 ]

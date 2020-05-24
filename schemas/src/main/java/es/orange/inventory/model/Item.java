@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package es.orange.inventory;
+package es.orange.inventory.model;
 
 import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
@@ -14,8 +14,8 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class Item extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 9190114740064562826L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Item\",\"namespace\":\"es.orange.inventory\",\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"type\",\"type\":\"string\"}]}");
+  private static final long serialVersionUID = -8790623372480257947L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Item\",\"namespace\":\"es.orange.inventory.model\",\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"type\",\"type\":\"string\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -150,8 +150,8 @@ public class Item extends org.apache.avro.specific.SpecificRecordBase implements
    * Creates a new Item RecordBuilder.
    * @return A new Item RecordBuilder
    */
-  public static es.orange.inventory.Item.Builder newBuilder() {
-    return new es.orange.inventory.Item.Builder();
+  public static es.orange.inventory.model.Item.Builder newBuilder() {
+    return new es.orange.inventory.model.Item.Builder();
   }
 
   /**
@@ -159,11 +159,11 @@ public class Item extends org.apache.avro.specific.SpecificRecordBase implements
    * @param other The existing builder to copy.
    * @return A new Item RecordBuilder
    */
-  public static es.orange.inventory.Item.Builder newBuilder(es.orange.inventory.Item.Builder other) {
+  public static es.orange.inventory.model.Item.Builder newBuilder(es.orange.inventory.model.Item.Builder other) {
     if (other == null) {
-      return new es.orange.inventory.Item.Builder();
+      return new es.orange.inventory.model.Item.Builder();
     } else {
-      return new es.orange.inventory.Item.Builder(other);
+      return new es.orange.inventory.model.Item.Builder(other);
     }
   }
 
@@ -172,11 +172,11 @@ public class Item extends org.apache.avro.specific.SpecificRecordBase implements
    * @param other The existing instance to copy.
    * @return A new Item RecordBuilder
    */
-  public static es.orange.inventory.Item.Builder newBuilder(es.orange.inventory.Item other) {
+  public static es.orange.inventory.model.Item.Builder newBuilder(es.orange.inventory.model.Item other) {
     if (other == null) {
-      return new es.orange.inventory.Item.Builder();
+      return new es.orange.inventory.model.Item.Builder();
     } else {
-      return new es.orange.inventory.Item.Builder(other);
+      return new es.orange.inventory.model.Item.Builder(other);
     }
   }
 
@@ -199,7 +199,7 @@ public class Item extends org.apache.avro.specific.SpecificRecordBase implements
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(es.orange.inventory.Item.Builder other) {
+    private Builder(es.orange.inventory.model.Item.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
@@ -215,7 +215,7 @@ public class Item extends org.apache.avro.specific.SpecificRecordBase implements
      * Creates a Builder by copying an existing Item instance
      * @param other The existing instance to copy.
      */
-    private Builder(es.orange.inventory.Item other) {
+    private Builder(es.orange.inventory.model.Item other) {
       super(SCHEMA$);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
@@ -241,7 +241,7 @@ public class Item extends org.apache.avro.specific.SpecificRecordBase implements
       * @param value The value of 'id'.
       * @return This builder.
       */
-    public es.orange.inventory.Item.Builder setId(java.lang.CharSequence value) {
+    public es.orange.inventory.model.Item.Builder setId(java.lang.CharSequence value) {
       validate(fields()[0], value);
       this.id = value;
       fieldSetFlags()[0] = true;
@@ -261,7 +261,7 @@ public class Item extends org.apache.avro.specific.SpecificRecordBase implements
       * Clears the value of the 'id' field.
       * @return This builder.
       */
-    public es.orange.inventory.Item.Builder clearId() {
+    public es.orange.inventory.model.Item.Builder clearId() {
       id = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -281,7 +281,7 @@ public class Item extends org.apache.avro.specific.SpecificRecordBase implements
       * @param value The value of 'type'.
       * @return This builder.
       */
-    public es.orange.inventory.Item.Builder setType(java.lang.CharSequence value) {
+    public es.orange.inventory.model.Item.Builder setType(java.lang.CharSequence value) {
       validate(fields()[1], value);
       this.type = value;
       fieldSetFlags()[1] = true;
@@ -301,7 +301,7 @@ public class Item extends org.apache.avro.specific.SpecificRecordBase implements
       * Clears the value of the 'type' field.
       * @return This builder.
       */
-    public es.orange.inventory.Item.Builder clearType() {
+    public es.orange.inventory.model.Item.Builder clearType() {
       type = null;
       fieldSetFlags()[1] = false;
       return this;
