@@ -1,4 +1,4 @@
-package es.orange.inventory;
+package es.orange.inventory.it;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -24,7 +24,11 @@ import org.springframework.web.client.RestTemplate;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.gson.Gson;
+
+import es.orange.inventory.data.AvailableInventoryByType;
+import es.orange.inventory.data.Item;
+import es.orange.inventory.data.ItemList;
+import es.orange.inventory.data.ReservationItems;
 
 /**
  * Ensure you have started full suite of applications before running this test
@@ -162,114 +166,4 @@ public class InventoryIntegrationTest {
 	}
 	
 	
-	static class ItemList{
-		private List<Item> items;
-
-		public ItemList(List<Item> items) {
-			this.items = items;
-		}
-
-		public List<Item> getItems() {
-			return items;
-		}
-
-		public void setItems(List<Item> items) {
-			this.items = items;
-		}
-		
-	}
-
-	static class Item {
-		private String id;
-		private String type;
-		
-		public Item() {
-			
-		}
-
-		public Item(String id, String type) {
-			this.id = id;
-			this.type = type;
-		}
-
-		public String getId() {
-			return id;
-		}
-
-		public void setId(String id) {
-			this.id = id;
-		}
-
-		public String getType() {
-			return type;
-		}
-
-		public void setType(String type) {
-			this.type = type;
-		}
-
-	}
-
-	static class AvailableInventoryByType {
-		private String type;
-		private int count;
-		
-		public String getType() {
-			return type;
-		}
-		
-		public void setType(String type) {
-			this.type = type;
-		}
-		
-		public int getCount() {
-			return count;
-		}
-		
-		public void setCount(int count) {
-			this.count = count;
-		}
-		
-	}
-	
-	static class ReservationItems {
-		private String clientId;
-		private String type;
-		private int quantity;
-		
-		public ReservationItems() {
-		}
-
-		public ReservationItems(String clientId, String type, int quantity) {
-			super();
-			this.clientId = clientId;
-			this.type = type;
-			this.quantity = quantity;
-		}
-
-		public String getClientId() {
-			return clientId;
-		}
-
-		public void setClientId(String clientId) {
-			this.clientId = clientId;
-		}
-
-		public String getType() {
-			return type;
-		}
-		
-		public void setType(String type) {
-			this.type = type;
-		}
- 
-		public int getQuantity() {
-			return quantity;
-		}
-
-		public void setQuantity(int quantity) {
-			this.quantity = quantity;
-		}
-		
-	}
 }
