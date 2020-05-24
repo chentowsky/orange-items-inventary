@@ -8,7 +8,7 @@ La compañía planea ofrecer dos nuevos servicios a los clientes. Estos servicio
 - [X] Añadir stock para cualquiera de estos items.
 - [X] Gestionar el stock de los items. Necesitamos conocer cuántos items de cada tipo tenemos disponibles.
 - [X] Reservar N items de un mismo tipo permitiéndonos conocer a qué cliente está asociado.
-- [X] Devolver N recursos de un mismo tipo al stock una vez el cliente deja de necesitarlo bien porque se ha dado de baja del servicio asociado o bien porque ha cancelado la compra.
+- [ ] Devolver N recursos de un mismo tipo al stock una vez el cliente deja de necesitarlo bien porque se ha dado de baja del servicio asociado o bien porque ha cancelado la compra.
 
 La información que debemos almacenar en el stock para cada tipo de item es la siguiente:
 * Para los routers solamente almacenamos su identificador que es un alfanumérico.
