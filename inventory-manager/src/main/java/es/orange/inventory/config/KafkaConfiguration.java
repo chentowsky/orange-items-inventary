@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import es.orange.inventory.Item;
-import es.orange.inventory.ReservedItem;
+import es.orange.inventory.model.Item;
+import es.orange.inventory.model.RequestedItem;
 import es.orange.inventory.schema.Schemas;
 
 @Configuration
@@ -44,8 +44,8 @@ public class KafkaConfiguration {
 	  }
 
 	  @Bean
-	  public KafkaProducer<ReservedItem, Integer> reservedItemProducer() {
-		return startProducer(bootstrapServers, Schemas.Topics.RESERVED_ITEM_SERDE, 
+	  public KafkaProducer<RequestedItem, Integer> reservedItemProducer() {
+		return startProducer(bootstrapServers, Schemas.Topics.REQUESTED_ITEMS_SERDE, 
 			new Serdes.IntegerSerde());
 	  }
 	  
