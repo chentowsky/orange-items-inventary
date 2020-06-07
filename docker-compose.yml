@@ -50,7 +50,8 @@ services:
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS : 'kafka:9092'
       SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
- 
+      SERVER_HOST: inventory-manager
+   
  
   inventory-calculator:
     build:
@@ -64,4 +65,18 @@ services:
       SPRING_KAFKA_BOOTSTRAP_SERVERS : 'kafka:9092'
       SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
       SERVER_HOST: inventory-calculator
+  
+  inventory-service:
+    build:
+      context: ./inventory-service
+    depends_on:
+      - schema-registry
+      - inventory-manager
+      - inventory-calculator
+    ports:
+      - "9092:9092"
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS : 'kafka:9092'
+      SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
+      SERVER_HOST: inventory-service
   

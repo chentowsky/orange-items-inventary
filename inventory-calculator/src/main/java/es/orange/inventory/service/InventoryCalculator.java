@@ -30,21 +30,13 @@ import es.orange.inventory.model.RequestedItem;
 import es.orange.inventory.schema.Schemas.Topics;
 
 @Component
-public class InventoryCalculator implements InventoryService {
+public class InventoryCalculator {
   private static final Logger LOGGER = LoggerFactory.getLogger(InventoryCalculator.class);
   
   @Autowired
   private Properties streamsConfig;
 
   private KafkaStreams availableByTypeStream;
-
-  static String AVAILABLE_INVENTORY_STORE = "available_inventory_store";
-
-  @Override
-  public Optional<Integer> getAvailableStockByType(String type) throws NotFoundException {
-    return Optional.ofNullable(availableByTypeStream
-        .store(StoreQueryParameters.fromNameAndType(AVAILABLE_INVENTORY_STORE, QueryableStoreTypes.<String, Integer>keyValueStore())).get(type));
-  }
 
   @PostConstruct
   void start() throws Exception {
@@ -82,8 +74,8 @@ public class InventoryCalculator implements InventoryService {
             (stock, reservations) -> {
               LOGGER.info("Added to stock:{}, Reservation requested: {}", stock, reservations);
               return (stock - (reservations == null ? 0 : reservations));
-            }, Materialized.<String, Integer>as(Stores.persistentKeyValueStore(AVAILABLE_INVENTORY_STORE))
-                .withKeySerde(Topics.AVAILABLE_BY_TYPE_INVENTORY.keySerde()).withValueSerde(Topics.AVAILABLE_BY_TYPE_INVENTORY.valueSerde()));
+            }, 
+            Materialized.with(Topics.AVAILABLE_BY_TYPE_INVENTORY.keySerde(), Topics.AVAILABLE_BY_TYPE_INVENTORY.valueSerde()));
     
     //TODO: Implements when a client release a item
     

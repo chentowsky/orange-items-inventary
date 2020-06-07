@@ -51,5 +51,6 @@
 		<module>schemas</module>
 		<module>inventory-manager</module>
 		<module>inventory-calculator</module>
+		<module>inventory-service</module>
 	</modules>
 </project>

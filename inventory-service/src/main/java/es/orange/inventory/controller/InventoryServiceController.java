@@ -25,8 +25,8 @@ import es.orange.inventory.service.InventoryService;
 public class InventoryServiceController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(InventoryServiceController.class);
 
-	@Autowired
-	private InventoryService invCalculator;
+//	@Autowired
+//	private InventoryService invCalculator;
 
 
 	@RequestMapping(value = "/api/inventory/types/{type}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -37,8 +37,9 @@ public class InventoryServiceController {
 		LOGGER.info("Received a request for available type [{}] inventory", type);
 
 
-		Optional<Integer> availableTypeCount = invCalculator.getAvailableStockByType(type);
-		return new TypeInventoryPayload(type, availableTypeCount.orElse(0));
+//		Optional<Integer> availableTypeCount = invCalculator.getAvailableStockByType(type);
+//		return new TypeInventoryPayload(type, availableTypeCount.orElse(0));
+		return new TypeInventoryPayload(type, 0);
 	}
 
 	@ExceptionHandler(NotFoundException.class)
